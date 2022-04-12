@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ListPokemons } from "../Pokemon/services/ListPokemons";
 
 interface pokedexProps {}
 
@@ -12,6 +13,7 @@ interface PokemonListInterface {
 
 function getDetailsfromPokemon(pokemon: PokemonListInterface) {}
 
+
 export const Pokedex: React.FC<pokedexProps> = () => {
   const [pokemons, setPokemons] = useState<PokemonListInterface[]>([]);
   /* pokemons = Leitura dos dados   |   setPokemons = Modificação dos dados*/
@@ -23,9 +25,11 @@ export const Pokedex: React.FC<pokedexProps> = () => {
   >(undefined);
 
   useEffect(() => {
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon")
-      .then((response) => setPokemons(response.data.results)); // --> Aqui eu percorri dentro da api e depois determinei o array no qual eu queria que pegasse dentro da api, por isso tem o ""
+    ListPokemons()
+    .then((response) => {
+      setPokemons(response.data.results)
+    })
+     // --> Aqui eu percorri dentro da api e depois determinei o array no qual eu queria que pegasse dentro da api, por isso tem o ""
   }, []); //--> o array esta vazio pois eu quero que ele execurte essa função quando a aplicação for iniciada
 
   useEffect(() => {
